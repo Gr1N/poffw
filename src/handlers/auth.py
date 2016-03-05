@@ -5,7 +5,7 @@ from http import HTTPStatus
 
 from aiohttp import web
 
-from helpers import hashcash, random_string
+from helpers import complexity, hashcash, random_string
 
 __all__ = (
     'login_task',
@@ -18,10 +18,13 @@ X_POFFW_EXPIRE = 60
 
 
 async def login_task(request):
-    token = random_string()
-    task = hashcash.new()
-
     redis = request.app['redis']
+
+    user_ip, _ = request.transport.get_extra_info('peername')
+
+    token = random_string()
+    bits = await complexity.get(redis, user_ip)
+    task = hashcash.new(bits=bits)
 
     await redis.set(token, json.dumps(task))
     await redis.expire(token, X_POFFW_EXPIRE)
@@ -53,6 +56,9 @@ async def login(request):
     task = json.loads(task.decode('utf-8'))
     task['counter'] = counter
     if not hashcash.verify(**task):
+        user_ip, _ = request.transport.get_extra_info('peername')
+        await complexity.store(redis, user_ip)
+
         return web.Response(status=HTTPStatus.BAD_REQUEST)
 
     return web.json_response()
