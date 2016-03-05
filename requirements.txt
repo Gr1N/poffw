@@ -1,0 +1,4 @@
+aiohttp==0.21.2
+aiohttp-jinja2==0.7.0
+aioredis==0.2.5
+pysha3==0.3
