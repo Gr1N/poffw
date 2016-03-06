@@ -10,17 +10,25 @@ from aiohttp import web
 import handlers
 
 
+async def static_processor(request):
+    return {
+        'STATIC_URL': '/static/',
+    }
+
+
 async def get_app():
     redis = await aioredis.create_redis(('localhost', 6379,), db=1)
 
     app = web.Application()
     app['redis'] = redis
 
-    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('templates/'))
+    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('templates/'),
+                         context_processors=(static_processor,))
 
     app.router.add_route('GET', '/', handlers.index)
     app.router.add_route('GET', '/login', handlers.login_task)
     app.router.add_route('POST', '/login', handlers.login)
+    app.router.add_static('/static', 'static')
 
     async def close_redis(app):
         app['redis'].close()
