@@ -9,9 +9,10 @@ Install external dependencies:
     $ brew install python3
     $ brew install redis
 
-Install Python dependencies:
+Install Python and JS dependencies:
 
     $ make deps-py
+    $ make deps-js
 
 And run development server:
 
