@@ -54,18 +54,18 @@ var request = require('superagent/lib/client'),
                 }).indexOf(prefix) === 0;
             };
 
-            while (true) {
-                if (check(counter)) {
-                    return counter;
-                }
-
-                counter += 1;
+        while (true) {
+            if (check(counter)) {
+                return counter;
             }
+
+            counter += 1;
+        }
     },
 
     login = function(event) {
         request.post(urlLogin).set({
-            'X-POFFW': form.querySelector('#inputToken').value,
+            'X-POFFW': form.querySelector('#inputToken').value
         }).send({
             login: form.querySelector('#inputEmail').value,
             password: form.querySelector('#inputPassword').value,
