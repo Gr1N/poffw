@@ -17,7 +17,7 @@ async def get(redis, user_ip):
     # Just for tests, if want use something like this in your application
     # you should use configuration with predefined prairs (attempts, complexity)
     if attempts > 3:
-        return 50
+        return 4
 
     return 1
 

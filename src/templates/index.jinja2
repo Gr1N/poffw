@@ -23,7 +23,19 @@
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        <input type="hidden" id="inputToken">
+        <input type="hidden" id="inputCounter">
+
+        <div class="checkbox">
+          <label>
+            <input id="inputNotARobot" type="checkbox"> I'm not a robot
+          </label>
+          <span id="labelWorking" class="label label-warning">Working</span>
+          <span id="labelSuccess" class="label label-success">Success</span>
+        </div>
+
+        <button id="inputButton" class="btn btn-lg btn-primary btn-block" type="submit" disabled="disabled">Sign in</button>
       </form>
 
     </div>

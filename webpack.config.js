@@ -10,6 +10,10 @@ module.exports = {
         path: './src/static',
         filename: 'bundle.js'
     },
+    node: {
+        child_process: 'empty',
+        global: false
+    },
     module: {
       loaders: [
             {
